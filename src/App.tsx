@@ -1,3 +1,4 @@
+import React from 'react'; // Import React
 import {
   AuthBindings,
   Authenticated,
@@ -21,24 +22,28 @@ import routerBindings, {
 } from "@refinedev/react-router-v6";
 import dataProvider from "@refinedev/simple-rest";
 import axios, { AxiosRequestConfig } from "axios";
-import { CredentialResponse } from "interfaces/google";
+import { CredentialResponse } from "./interfaces/google";
 import {
   BlogPostCreate,
   BlogPostEdit,
   BlogPostList,
   BlogPostShow,
-} from "pages/blog-posts";
+} from "./pages/blog-posts";
 import {
   CategoryCreate,
   CategoryEdit,
   CategoryList,
   CategoryShow,
-} from "pages/categories";
-import { Login } from "pages/login";
+} from "./pages/categories";
+import { Login } from "./pages/login";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { parseJwt } from "utils/parse-jwt";
+import { parseJwt } from "./utils/parse-jwt";
 import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
+import ExtremeEver from "./pages/extreme/ever";
+import { ExtremeAnnual } from "./pages/extreme/annual";
+import ExtremeMonthly from "./pages/extreme/monthly";
+import Extreme from './pages/extreme/extreme';
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -162,6 +167,17 @@ function App() {
                   canDelete: true,
                 },
               },
+              {
+                name: "extreme",
+                list: "/extreme",
+                create: "/extreme/ever",
+                edit: "/extreme/annual",
+                show: "/extreme/monthly",
+                meta: {
+                  canDelete: true,
+                },
+              },
+              
             ]}
             options={{
               syncWithLocation: true,
@@ -194,6 +210,12 @@ function App() {
                   <Route path="create" element={<CategoryCreate />} />
                   <Route path="edit/:id" element={<CategoryEdit />} />
                   <Route path="show/:id" element={<CategoryShow />} />
+                </Route>
+                <Route path="/extreme">
+                  <Route index element={<Extreme />} />
+                  <Route path="ever" element={<ExtremeEver />} />
+                  <Route path="annual" element={<ExtremeAnnual />} />
+                  <Route path="monthly" element={<ExtremeMonthly />} />
                 </Route>
                 <Route path="*" element={<ErrorComponent />} />
               </Route>

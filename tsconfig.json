@@ -20,5 +20,10 @@
       "*": ["./*"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "node_modules/react-hook-form/dist/index.d.ts"
+]
+
 }
